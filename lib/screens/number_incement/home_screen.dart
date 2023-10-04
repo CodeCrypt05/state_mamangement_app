@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:statemanagement_app/bloc/increment_num_bloc/counter_bloc.dart';
 import 'package:statemanagement_app/bloc/increment_num_bloc/counter_state.dart';
+import 'package:statemanagement_app/cubits/counter_cubit.dart';
 import 'package:statemanagement_app/screens/number_incement/second_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -14,30 +15,26 @@ class HomeScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Center(
-            child: BlocBuilder<CounterBloc, CounterState>(
-              builder: (context, state) {
-                if (state is CounterInitialState) {
-                  final count = (state).count;
-
-                  return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          'Count:',
-                          style: TextStyle(fontSize: 24),
-                        ),
-                        Text(
-                          '$count',
-                          style: TextStyle(fontSize: 48),
-                        ),
-                      ],
+            child: BlocBuilder<CounterCubit, int>(builder: (context, state) {
+              // if (state is CounterInitialState) {
+              //   final count = (state).count;
+              // }
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      'Count:',
+                      style: TextStyle(fontSize: 24),
                     ),
-                  );
-                }
-                return Container();
-              },
-            ),
+                    Text(
+                      '$state',
+                      style: TextStyle(fontSize: 48),
+                    ),
+                  ],
+                ),
+              );
+            }),
           ),
           SizedBox(
             height: 20,

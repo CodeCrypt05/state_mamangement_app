@@ -1,39 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:statemanagement_app/bloc/increment_num_bloc/counter_bloc.dart';
-import 'package:statemanagement_app/bloc/increment_num_bloc/counter_event.dart';
-import 'package:statemanagement_app/bloc/increment_num_bloc/counter_state.dart';
+import 'package:statemanagement_app/cubits/counter_cubit.dart';
 
 class SecondScreen extends StatelessWidget {
   const SecondScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final CounterBloc _counterBloc = BlocProvider.of<CounterBloc>(context);
+    final CounterCubit counterCubit = BlocProvider.of<CounterCubit>(context);
     return Scaffold(
       body: Center(
-        child: BlocBuilder<CounterBloc, CounterState>(
+        child: BlocBuilder<CounterCubit, int>(
           builder: (context, state) {
-            if (state is CounterInitialState) {
-              final count = (state as CounterInitialState).count;
-
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      'Count:',
-                      style: TextStyle(fontSize: 24),
-                    ),
-                    Text(
-                      '$count',
-                      style: TextStyle(fontSize: 48),
-                    ),
-                  ],
-                ),
-              );
-            }
-            return Container();
+            // if (state is CounterInitialState) {
+            //   final count = (state as CounterInitialState).count;
+            // }
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'Count:',
+                    style: TextStyle(fontSize: 24),
+                  ),
+                  Text(
+                    '$state',
+                    style: TextStyle(fontSize: 48),
+                  ),
+                ],
+              ),
+            );
           },
         ),
       ),
@@ -43,7 +39,7 @@ class SecondScreen extends StatelessWidget {
           FloatingActionButton(
             heroTag: "btn1",
             onPressed: () {
-              _counterBloc.add(IncrementNumberEvent());
+              counterCubit.increment();
             },
             child: Icon(Icons.add),
           ),
@@ -51,7 +47,7 @@ class SecondScreen extends StatelessWidget {
           FloatingActionButton(
             heroTag: "btn2",
             onPressed: () {
-              _counterBloc.add(DecrementNumberEvent());
+              counterCubit.decrment();
             },
             child: Icon(Icons.remove),
           ),
